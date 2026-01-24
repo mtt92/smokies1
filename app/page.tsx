@@ -83,7 +83,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section con Immagine Fumo dall'Alto - SPAZIO RIDOTTO */}
-      <section className="relative min-h-screen flex items-start justify-center overflow-hidden pt-16 md:pt-20">
+      <section className="relative min-h-screen flex items-start justify-center overflow-hidden ">
         {/* Immagine Fumo Custom */}
         <div className="absolute inset-0">
           <Image
