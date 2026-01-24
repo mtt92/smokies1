@@ -82,8 +82,8 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section con Immagine Fumo dall'Alto */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Hero Section con Immagine Fumo dall'Alto - SPAZIO RIDOTTO */}
+      <section className="relative min-h-screen flex items-start justify-center overflow-hidden pt-16 md:pt-20">
         {/* Immagine Fumo Custom */}
         <div className="absolute inset-0">
           <Image
@@ -111,7 +111,7 @@ export default function HomePage() {
           />
         </div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -201,7 +201,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Sezione Contatti - Tutti i Numeri */}
+      {/* Sezione Contatti - CARD CLICCABILI PER MAPS */}
       <section className="py-20 bg-zinc-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -214,35 +214,43 @@ export default function HomePage() {
             <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-zinc-900">
               📞 <span className="text-gradient">Contattaci</span>
             </h2>
-            <p className="text-zinc-600 text-lg">Scegli la sede più vicina e chiamaci direttamente</p>
+            <p className="text-zinc-600 text-lg">Clicca sulla sede per aprire Maps</p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {stores.map((store, index) => (
-              <motion.div
-                key={index}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-zinc-100"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <div className="text-4xl mb-4 text-center">📍</div>
-                <h3 className="text-xl font-bold mb-2 text-zinc-900 text-center">
-                  {store.location}
-                </h3>
-                <p className="text-zinc-600 text-sm mb-4 text-center">
-                  {store.address}
-                </p>
-                <a
-                  href={`tel:${store.phoneRaw}`}
-                  className="block bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors text-center flex items-center justify-center space-x-2"
+            {stores.map((store, index) => {
+              // Crea URL Google Maps per ogni store
+              const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(store.address)}`
+              
+              return (
+                <motion.a
+                  key={index}
+                  href={mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-zinc-100 cursor-pointer"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  <Phone size={18} />
-                  <span>{store.phone}</span>
-                </a>
-              </motion.div>
-            ))}
+                  <div className="text-4xl mb-4 text-center">📍</div>
+                  <h3 className="text-xl font-bold mb-2 text-zinc-900 text-center">
+                    {store.location}
+                  </h3>
+                  <p className="text-zinc-600 text-sm mb-4 text-center">
+                    {store.address}
+                  </p>
+                  <div className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold text-center flex items-center justify-center space-x-2 pointer-events-none">
+                    <Phone size={18} />
+                    <span>{store.phone}</span>
+                  </div>
+                  <p className="text-green-600 text-xs mt-3 text-center font-medium">
+                    Clicca per aprire Maps 🗺️
+                  </p>
+                </motion.a>
+              )
+            })}
           </div>
         </div>
       </section>
